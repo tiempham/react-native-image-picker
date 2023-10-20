@@ -70,6 +70,17 @@
     
     configuration.selectionLimit = [options[@"selectionLimit"] integerValue];
 
+    if (@available(iOS 15, *)) {
+        configuration.selection = PHPickerConfigurationSelectionOrdered;
+    } 
+    
+    if (options[@"preselectedAssetIdentifiers"] != nil) {
+        NSArray<NSString *> *preselectedAssetIdentifiers = [RCTConvert NSStringArray:options[@"preselectedAssetIdentifiers"]];
+        if (@available(iOS 15, *)) {
+            configuration.preselectedAssetIdentifiers = preselectedAssetIdentifiers;
+        } 
+    } 
+
     if ([options[@"mediaType"] isEqualToString:@"video"]) {
         configuration.filter = [PHPickerFilter videosFilter];
     } else if ([options[@"mediaType"] isEqualToString:@"photo"]) {
